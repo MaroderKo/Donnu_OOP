@@ -46,7 +46,7 @@ namespace Donnu_OOP_2
             {
                 Console.WriteLine("Помилка під час вводу змiнної Long!");
             }
-
+            Console.ReadKey();
 
 
         }
