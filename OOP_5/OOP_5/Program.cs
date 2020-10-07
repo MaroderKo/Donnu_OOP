@@ -56,13 +56,20 @@ namespace OOP_5
                 }
             }
             //
-            int lenght = Math.Min(xs.Length, ys.Length);
+            
+            int[] zs =makeZ(xs,ys);
+            
+        }
+        static int[] makeZ(int[] a, int[] b)
+        {
             int[] zs = new int[0];
-            for (i = 0; i < lenght; i++)
+            int lenght = Math.Min(a.Length, b.Length);
+            for (int i = 0; i < lenght; i++)
             {
-                zs.Append(xs[lenght - i] / ys[i]);
+                zs.Append(a[lenght - 1 - i] / b[i]);
             }
             Console.WriteLine(zs);
+            return zs;
         }
     }
 }
