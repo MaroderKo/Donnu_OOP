@@ -53,9 +53,9 @@ namespace Donnu_OOP_3
                     long rez = Convert.ToInt64(str);
                     Console.WriteLine(rez);
                 }
-                catch
+                catch (Exception e)
                 {
-                    Console.WriteLine("Помилка під час вводу змiнної Long!");
+                    Console.WriteLine($"Сталася помилка {e.Message} під час вводу змiнної Long!");
                 }
             }
 

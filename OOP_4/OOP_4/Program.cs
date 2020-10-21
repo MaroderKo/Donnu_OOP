@@ -17,20 +17,31 @@ namespace OOP_4
                 Console.WriteLine("a) вводити координати точки з клавiатури(файлу);\nb) виводити координати точки на екран(файл);\nc) знаходити вiдстанi мiж двома точками;\nd) знаходити найменшу / найбiльшу вiдстань вiд заданої точки, до множини точок(заданих масивом).\nе)Вийти с програмы ");
                 char ans = Console.ReadKey().KeyChar;
                 Console.Clear();
-                if (ans == 'a')
+                switch (ans) 
                 {
-                    Input(ref p);
+                    case 'a':
+                        Input(ref p);
+                        break;
+                    case 'b':
+                        p.Print();
+                        break;
+                    case 'c':
+                        p.LineSize();
+                        break;
+                    case 'd':
+                        p.Find_long();
+                        break;
+                    case 'e':
+                        Environment.Exit(1);
+                        break;
+                    default:
+                        Console.WriteLine("Введите коректную букву ответа!");
+                        Console.ReadKey();
+                        Console.Clear();
+                        break;
+
                 }
-                else if (ans == 'b')
-                {
-                    p.Print();
-                }
-                else if (ans == 'c')
-                { p.LineSize(); }
-                else if (ans == 'd')
-                { p.Find_long(); }
-                else if (ans == 'e')
-                { Environment.Exit(1); }
+                
             }
         }
         public static void Input(ref Points p)
@@ -38,33 +49,62 @@ namespace OOP_4
             Console.WriteLine("a)Ввести из файла\nb)Ввести вручную");
             char ans = Console.ReadKey().KeyChar;
             Console.Clear();
+            switch (ans)
+            {
+                case 'a':
+                    XmlSerializer formatter = new XmlSerializer(typeof(Points));
+                    using (FileStream fs = new FileStream("points.xml", FileMode.OpenOrCreate))
+                    {
+                        p = (Points)formatter.Deserialize(fs);
+
+                        Console.WriteLine("Объект загружен");
+                    }
+                    Console.ReadKey();
+                    break;
+                case 'b':
+                    try
+                    {
+                        Console.WriteLine("Введите координату Х первой точки:");
+                        p.setX1(Convert.ToInt32(Console.ReadLine()));
+                        Console.WriteLine("Введите координату У первой точки:");
+                        p.setY1(Convert.ToInt32(Console.ReadLine()));
+                        Console.WriteLine("Введите координату X второй точки:");
+                        p.setX2(Convert.ToInt32(Console.ReadLine()));
+                        Console.WriteLine("Введите координату У второй точки:");
+                        p.setY2(Convert.ToInt32(Console.ReadLine()));
+                        break;
+                    }
+                    catch (InvalidCastException e)
+                    {
+                        Console.WriteLine("При вводе данных произошла ошибка "+e.Message+", данные небыли сохранены!\nЖелаете повторить ввод координат?(y/n)");
+                        if (Console.ReadKey().KeyChar.Equals('y'))
+                        {
+                            Input(ref p);
+                        }
+                    }
+                    break;
+                
+            }
             if (ans == 'a')
             {
-                XmlSerializer formatter = new XmlSerializer(typeof(Points));
-                using (FileStream fs = new FileStream("points.xml", FileMode.OpenOrCreate))
-                {
-                    p = (Points)formatter.Deserialize(fs);
-
-                    Console.WriteLine("Объект загружен");
-                }
-                Console.ReadKey();
+                
             }
             else if (ans == 'b')
             {
                 try
                 {
                     Console.WriteLine("Введите координату Х первой точки:");
-                    p.x1 = Convert.ToInt32(Console.ReadLine());
+                    p.setX1( Convert.ToInt32(Console.ReadLine()));
                     Console.WriteLine("Введите координату У первой точки:");
-                    p.y1 = Convert.ToInt32(Console.ReadLine());
+                    p.setY1( Convert.ToInt32(Console.ReadLine()));
                     Console.WriteLine("Введите координату X второй точки:");
-                    p.x2 = Convert.ToInt32(Console.ReadLine());
+                    p.setX2( Convert.ToInt32(Console.ReadLine()));
                     Console.WriteLine("Введите координату У второй точки:");
-                    p.y2 = Convert.ToInt32(Console.ReadLine());
+                    p.setY2( Convert.ToInt32(Console.ReadLine()));
                 }
-                catch
+                catch (InvalidCastException e)
                 {
-                    Console.WriteLine("При вводе данных произошла ошибка, данные небыли сохранены!\nЖелаете повторить ввод координат?(y/n)");
+                    Console.WriteLine("При вводе данных произошла ошибка"+e.Message+", данные небыли сохранены!\nЖелаете повторить ввод координат?(y/n)");
                     if (Console.ReadKey().KeyChar.Equals('y'))
                     {
                         Input(ref p);
@@ -82,15 +122,30 @@ namespace OOP_4
     {
         
         
-        public double x1=0;
-        public double x2=0;
-        public double y1 = 0;
-        public double y2 = 0;
+        double x1=0;
+        double x2=0;
+        double y1 = 0;
+        double y2 = 0;
         public Points()
         {
             
         }
-
+        public void setX1(int x)
+        {
+            x1 = x;
+        }
+        public void setY1(int x)
+        {
+            y1 = x;
+        }
+        public void setX2(int x)
+        {
+            x2 = x;
+        }
+        public void setY2(int x)
+        {
+            y2 = x;
+        }
         public void Print()
         {
             Console.WriteLine($"x1={x1}\ny1={y1}\nx2=={x2}\ny2={y2}");
